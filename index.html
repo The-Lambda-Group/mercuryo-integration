@@ -13,6 +13,13 @@
     </form>
 
     <script>
+        // Function to save form state to localStorage
+        function saveFormState() {
+            const addressInput = document.getElementById("addressInput").value;
+            localStorage.setItem("addressInput", addressInput);
+        }
+
+        // Function to redirect to API URL
         function redirectToAPI() {
             const address = document.getElementById("addressInput").value;
             const apiUrl = `http://localhost:3000/make-a-url?address=${encodeURIComponent(address)}`;
@@ -32,7 +39,18 @@
                     console.error("Error fetching API:", error);
                     alert("An error occurred while fetching the API.");
                 });
+                
+            // Save the form state to localStorage
+            saveFormState();
         }
+
+        // Restore form state from localStorage on page load
+        window.addEventListener("load", function() {
+            const savedAddress = localStorage.getItem("addressInput");
+            if (savedAddress) {
+                document.getElementById("addressInput").value = savedAddress;
+            }
+        });
     </script>
 </body>
 
