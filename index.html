@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>API URL Redirect</title>
+</head>
+
+<body>
+    <h1>Enter an Address:</h1>
+    <form id="addressForm">
+        <input type="text" id="addressInput" placeholder="Enter address">
+        <button type="button" onclick="redirectToAPI()">Submit</button>
+    </form>
+
+    <script>
+        function redirectToAPI() {
+            const address = document.getElementById("addressInput").value;
+            const apiUrl = `http://localhost:3000/make-a-url?address=${encodeURIComponent(address)}`;
+
+            // Fetch the API URL
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        // Redirect the user to the generated URL
+                        window.location.href = data.url;
+                    } else {
+                        alert("API response does not contain a URL.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching API:", error);
+                    alert("An error occurred while fetching the API.");
+                });
+        }
+    </script>
+</body>
+
+</html>
